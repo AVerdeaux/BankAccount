@@ -7,12 +7,12 @@
             return -1;
         }
 
-        public bool Deposit(int accountId, double value)
+        public bool Deposit(int accountId, decimal value)
         {
             return false;
         }
 
-        public bool Withdraw(int accountId, double value)
+        public bool Withdraw(int accountId, decimal value)
         {
             return false;
         }
