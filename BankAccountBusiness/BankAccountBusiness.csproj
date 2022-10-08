@@ -7,7 +7,7 @@
     <ProjectGuid>{CB8AC092-D65A-478F-9EE5-A397EEC6FDAD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BankAccountBusiness</RootNamespace>
+    <RootNamespace>BankAccount.Business</RootNamespace>
     <AssemblyName>BankAccount.Business</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,7 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="Bank.cs" />
+    <Compile Include="IBank.cs" />
+    <Compile Include="IRegistry.cs" />
+    <Compile Include="Operation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Statement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
