@@ -10,6 +10,18 @@ namespace BankAccountTests
         private readonly List<Account> mAccounts;
         private readonly List<Tuple<int, Operation>> mOperations;
 
+        public int NextId()
+        {
+            if (mAccounts.Any())
+            {
+                return mAccounts.Max(a => a.ID) + 1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         public void StoreNewAccount(Account account)
         {
             mAccounts.Add(account);
@@ -17,7 +29,12 @@ namespace BankAccountTests
 
         public Account GetAccount(int id)
         {
-            return mAccounts.Single(a => a.ID == id);
+            return mAccounts.SingleOrDefault(a => a.ID == id);
+        }
+
+        public Account GetAccount(string firstName, string name)
+        {
+            return mAccounts.SingleOrDefault(a => a.FirstName == firstName && a.Name == name);
         }
 
         public void StoreOperation(int accountId, Operation operation)
