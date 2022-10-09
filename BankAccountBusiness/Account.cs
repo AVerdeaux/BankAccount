@@ -9,12 +9,12 @@ namespace BankAccount.Business
         public string Name { get; private set; }
         public IReadOnlyCollection<Operation> Operations { get; private set; }
 
-        internal Account(int iD, string firstName, string name)
+        internal Account(int iD, string firstName, string name, IEnumerable<Operation> operations)
         {
             ID = iD;
             FirstName = firstName;
             Name = name;
-            Operations = new List<Operation>();
+            Operations = new List<Operation>(operations);
         }
     }
 }

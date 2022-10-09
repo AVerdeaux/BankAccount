@@ -1,4 +1,4 @@
-﻿using BankAccount.Business;
+﻿using BankAccountTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace BankAccount.Business.Tests
         [TestMethod("Create account")]
         public void CreateAccountTest()
         {
-            var bank = new Bank();
+            var bank = new Bank(new VolatileRegistry());
 
             Assert.AreEqual(-1, bank.CreateAccount(null, null), "Account created with null first name / name");
             Assert.AreEqual(-1, bank.CreateAccount("", ""), "Account created with empty first name / name");
@@ -22,7 +22,7 @@ namespace BankAccount.Business.Tests
         [TestMethod("Get account")]
         public void GetAccountTest()
         {
-            var bank = new Bank();
+            var bank = new Bank(new VolatileRegistry());
             int a1 = bank.CreateAccount("Alexandre", "TEST");
             int a2 = bank.CreateAccount("Jean", "TEST");
             int a3 = bank.CreateAccount("Alexandre", "RICHE");
@@ -38,7 +38,7 @@ namespace BankAccount.Business.Tests
         [TestMethod("Get statement")]
         public void GetStatementTest()
         {
-            var bank = new Bank();
+            var bank = new Bank(new VolatileRegistry());
             int a1 = bank.CreateAccount("Alexandre", "TEST");
 
             Assert.IsNotNull(bank.GetStatement(a1), "Can't get the statement of an account");
@@ -64,7 +64,7 @@ namespace BankAccount.Business.Tests
         [TestMethod("Deposit")]
         public void DepositTest()
         {
-            var bank = new Bank();
+            var bank = new Bank(new VolatileRegistry());
             int a1 = bank.CreateAccount("Alexandre", "TEST");
 
             Assert.IsTrue(bank.Deposit(a1, 100m), "First deposit on an account failed");
@@ -84,7 +84,7 @@ namespace BankAccount.Business.Tests
         [TestMethod("Withdrawal")]
         public void WithdrawTest()
         {
-            var bank = new Bank();
+            var bank = new Bank(new VolatileRegistry());
             int a1 = bank.CreateAccount("Alexandre", "TEST");
 
             Assert.IsTrue(bank.Withdraw(a1, 100m), "First withdrawal on an account failed");
