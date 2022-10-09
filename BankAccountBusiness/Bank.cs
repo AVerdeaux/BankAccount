@@ -44,7 +44,7 @@ namespace BankAccount.Business
 
         public Account GetAccount(int accountId)
         {
-            return null;
+            return Registry.GetAccount(accountId);
         }
 
         public Bank(IRegistry registry)
