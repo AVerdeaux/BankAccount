@@ -22,7 +22,7 @@ namespace BankAccount.Business
             else
             {
                 int id = Registry.NextId();
-                Registry.StoreNewAccount(new Account(id, firstName, name, new List<Operation>()));
+                Registry.StoreNewAccount(new Account(id, firstName, name));
                 return id;
             }
         }
@@ -45,6 +45,11 @@ namespace BankAccount.Business
         public Account GetAccount(int accountId)
         {
             return Registry.GetAccount(accountId);
+        }
+
+        public AccountHistory GetAccountHistory(int accountId)
+        {
+            return Registry.GetAccountHistory(accountId);
         }
 
         public Bank(IRegistry registry)

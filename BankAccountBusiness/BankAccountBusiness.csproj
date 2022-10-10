@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account.cs" />
+    <Compile Include="AccountHistory.cs" />
     <Compile Include="Bank.cs" />
     <Compile Include="IBank.cs" />
     <Compile Include="IRegistry.cs" />

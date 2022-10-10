@@ -37,6 +37,21 @@ namespace BankAccountTests
             return mAccounts.SingleOrDefault(a => a.FirstName == firstName && a.Name == name);
         }
 
+        public AccountHistory GetAccountHistory(int id)
+        {
+            var account = GetAccount(id);
+            if (account == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new AccountHistory(
+                    account,
+                    new List<Operation>(mOperations.Where(o => o.Item1 == id).Select(o => o.Item2)));
+            }
+        }
+
         public void StoreOperation(int accountId, Operation operation)
         {
             mOperations.Add(new Tuple<int, Operation>(accountId, operation));

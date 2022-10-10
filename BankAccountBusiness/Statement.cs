@@ -11,7 +11,7 @@ namespace BankAccount.Business
         public string Name { get; private set; }
         public decimal Balance { get; private set; }
 
-        internal Statement(Account account)
+        internal Statement(AccountHistory account)
         {
             Date = DateTime.Now;
             AccountId = account.ID;

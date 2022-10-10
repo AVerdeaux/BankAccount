@@ -9,5 +9,6 @@ namespace BankAccount.Business
         bool Withdraw(int accountId, decimal value);
         Statement GetStatement(int accountId);
         Account GetAccount(int accountId);
+        AccountHistory GetAccountHistory(int accountId);
     }
 }
