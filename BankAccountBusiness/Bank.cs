@@ -56,7 +56,15 @@ namespace BankAccount.Business
 
         public Statement GetStatement(int accountId)
         {
-            return null;
+            var history = GetAccountHistory(accountId);
+            if (history == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new Statement(history);
+            }
         }
 
         public Account GetAccount(int accountId)
