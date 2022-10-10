@@ -83,17 +83,19 @@ namespace BankAccount.Business.Tests
             var bank = new Bank(new VolatileRegistry());
             int a1 = bank.CreateAccount("Alexandre", "TEST");
 
-            Assert.IsTrue(bank.Deposit(a1, 100m), "First deposit on an account failed");
+            Assert.AreEqual(OperationResult.Success, bank.Deposit(a1, 100m), "First deposit on an account failed");
             Assert.AreEqual(100m, bank.GetAccountHistory(a1)?.Operations?.Last()?.Amount, "First deposit on an account is not right");
 
-            Assert.IsTrue(bank.Deposit(a1, 50m), "Second deposit on an account failed");
+            Assert.AreEqual(OperationResult.Success, bank.Deposit(a1, 50m), "Second deposit on an account failed");
             Assert.AreEqual(50m, bank.GetAccountHistory(a1)?.Operations?.Last()?.Amount, "Second deposit on an account is not right");
             Assert.AreEqual(2, bank.GetAccountHistory(a1)?.Operations?.Count, "Number of deposit on an account is not right");
 
-            Assert.IsFalse(bank.Deposit(a1, 0m), "Deposit of 0 on an account succeed");
+            Assert.AreEqual(OperationResult.UnknownAccount, bank.Deposit(100, 100m), "A deposit on an unknown account doesn't fail for unknown account");
+
+            Assert.AreEqual(OperationResult.InvalidAmount, bank.Deposit(a1, 0m), "Deposit of 0 on an account doesn't fail for invalid amount");
             Assert.IsFalse(bank.GetAccountHistory(a1).Operations.Any(o => o.Amount == 0m), "Deposit of 0 is in the history of an account");
 
-            Assert.IsFalse(bank.Deposit(a1, -10m), "Deposit of a negative amount on an account succeed");
+            Assert.AreEqual(OperationResult.InvalidAmount, bank.Deposit(a1, -10m), "Deposit of a negative amount on an account doesn't fail for invalid amount");
             Assert.IsFalse(bank.GetAccountHistory(a1).Operations.Any(o => o.Amount <= 0m), "Deposit of an invalid amount is in the history of an account");
         }
 
@@ -103,17 +105,19 @@ namespace BankAccount.Business.Tests
             var bank = new Bank(new VolatileRegistry());
             int a1 = bank.CreateAccount("Alexandre", "TEST");
 
-            Assert.IsTrue(bank.Withdraw(a1, 100m), "First withdrawal on an account failed");
+            Assert.AreEqual(OperationResult.Success, bank.Withdraw(a1, 100m), "First withdrawal on an account failed");
             Assert.AreEqual(-100m, bank.GetAccountHistory(a1)?.Operations?.Last()?.Amount, "First withdrawal on an account is not right");
 
-            Assert.IsTrue(bank.Withdraw(a1, 50m), "Second withdrawal on an account failed");
+            Assert.AreEqual(OperationResult.Success, bank.Withdraw(a1, 50m), "Second withdrawal on an account failed");
             Assert.AreEqual(-50m, bank.GetAccountHistory(a1)?.Operations?.Last()?.Amount, "Second withdrawal on an account is not right");
             Assert.AreEqual(2, bank.GetAccountHistory(a1)?.Operations?.Count, "Number of deposit on an account is not right");
 
-            Assert.IsFalse(bank.Withdraw(a1, 0m), "Withdrawal of 0 on an account succeed");
+            Assert.AreEqual(OperationResult.UnknownAccount, bank.Withdraw(100, 100m), "A withdrawal on an unknown account doesn't fail for unknown account");
+
+            Assert.AreEqual(OperationResult.InvalidAmount, bank.Withdraw(a1, 0m), "Withdrawal of 0 on an account doesn't fail for invalid amount");
             Assert.IsFalse(bank.GetAccountHistory(a1).Operations.Any(o => o.Amount == 0m), "Withdrawal of 0 is in the history of an account");
 
-            Assert.IsFalse(bank.Withdraw(a1, -10m), "Withdrawal of a negative amount on an account succeed");
+            Assert.AreEqual(OperationResult.InvalidAmount, bank.Withdraw(a1, -10m), "Withdrawal of a negative amount on an account doesn't fail for invalid amount");
             Assert.IsFalse(bank.GetAccountHistory(a1).Operations.Any(o => o.Amount == -10m), "Withdrawal of an invalid amount is in the history of an account");
         }
     }

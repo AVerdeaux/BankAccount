@@ -28,29 +28,37 @@ namespace BankAccount.Business
             }
         }
 
-        public bool Deposit(int accountId, decimal value)
+        public OperationResult Deposit(int accountId, decimal value)
         {
-            if (GetAccount(accountId) != null && value > 0m)
+            if (value <= 0m)
             {
-                Registry.StoreOperation(accountId, new Operation(DateTime.Now, value));
-                return true;
+                return OperationResult.InvalidAmount;
+            }
+            else if (GetAccount(accountId) == null)
+            {
+                return OperationResult.UnknownAccount;
             }
             else
             {
-                return false;
+                Registry.StoreOperation(accountId, new Operation(DateTime.Now, value));
+                return OperationResult.Success;
             }
         }
 
-        public bool Withdraw(int accountId, decimal value)
+        public OperationResult Withdraw(int accountId, decimal value)
         {
-            if (GetAccount(accountId) != null && value > 0m)
+            if (value <= 0m)
             {
-                Registry.StoreOperation(accountId, new Operation(DateTime.Now, -value));
-                return true;
+                return OperationResult.InvalidAmount;
+            }
+            else if (GetAccount(accountId) == null)
+            {
+                return OperationResult.UnknownAccount;
             }
             else
             {
-                return false;
+                Registry.StoreOperation(accountId, new Operation(DateTime.Now, -value));
+                return OperationResult.Success;
             }
         }
 
