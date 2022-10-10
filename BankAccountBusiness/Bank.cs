@@ -43,7 +43,15 @@ namespace BankAccount.Business
 
         public bool Withdraw(int accountId, decimal value)
         {
-            return false;
+            if (GetAccount(accountId) != null && value > 0m)
+            {
+                Registry.StoreOperation(accountId, new Operation(DateTime.Now, -value));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Statement GetStatement(int accountId)
