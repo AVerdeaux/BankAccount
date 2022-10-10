@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace BankAccount.Business
 {
@@ -29,7 +30,15 @@ namespace BankAccount.Business
 
         public bool Deposit(int accountId, decimal value)
         {
-            return false;
+            if (GetAccount(accountId) != null && value > 0m)
+            {
+                Registry.StoreOperation(accountId, new Operation(DateTime.Now, value));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool Withdraw(int accountId, decimal value)
