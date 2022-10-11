@@ -8,7 +8,7 @@
     <ProjectGuid>{7DF08736-3105-4FDA-815E-030E6B514C29}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BankAccountTests</RootNamespace>
+    <RootNamespace>BankAccount.Tests</RootNamespace>
     <AssemblyName>BankAccountTests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BankTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VolatileBankTests.cs" />
     <Compile Include="VolatileRegistry.cs" />
   </ItemGroup>
   <ItemGroup>

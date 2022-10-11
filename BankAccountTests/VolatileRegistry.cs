@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BankAccountTests
+namespace BankAccount.Tests
 {
-    class VolatileRegistry : IRegistry
+    public class VolatileRegistry : IRegistry
     {
         private readonly List<Account> mAccounts;
         private readonly List<Tuple<int, Operation>> mOperations;
