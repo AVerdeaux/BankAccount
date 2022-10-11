@@ -8,7 +8,9 @@ namespace BankAccount.Tests
     {
         protected override CsvRegistry CreateRegistry()
         {
-            return new CsvRegistry(Path.GetTempFileName());
+            string filePath = Path.GetTempFileName();
+            File.Delete(filePath);
+            return new CsvRegistry(filePath);
         }
 
         protected override void DeleteRegistry(CsvRegistry registry)
