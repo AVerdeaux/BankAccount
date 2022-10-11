@@ -12,6 +12,8 @@ namespace BankAccount
         {
             Bank = new Bank(new CsvRegistry(Path.Combine(Environment.CurrentDirectory, "Registry.csv")));
 
+            Console.WriteLine("Bienvenue à la Banque Non Sécurisée !");
+
             while (MainMenu() != MainMenuOption.Quit)
             {
             }
@@ -19,7 +21,6 @@ namespace BankAccount
 
         private static MainMenuOption MainMenu()
         {
-            Console.WriteLine("Bienvenue à la Banque Non Sécurisée !");
             Console.WriteLine("Que voulez-vous faire ?");
             Console.WriteLine("1 : Créer un compte");
             Console.WriteLine("0 : Quitter");
