@@ -2,6 +2,7 @@
 {
     enum MainMenuOption
     {
-        Quit = 0
+        Quit = 0,
+        AddAccount = 1
     }
 }
