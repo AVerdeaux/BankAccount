@@ -25,6 +25,7 @@ namespace BankAccount
             Console.WriteLine("Que voulez-vous faire ?");
             Console.WriteLine("1 : Créer un compte");
             Console.WriteLine("2 : Déposer de l'argent");
+            Console.WriteLine("3 : Retirer de l'argent");
             Console.WriteLine("0 : Quitter");
 
             if (int.TryParse(Console.ReadLine(), out int choice))
@@ -37,7 +38,10 @@ namespace BankAccount
                         AddAccount();
                         break;
                     case MainMenuOption.Deposit:
-                        Deposit();
+                        Operation("Argent déposé !", Bank.Deposit);
+                        break;
+                    case MainMenuOption.Withdraw:
+                        Operation("Retrait effectué !", Bank.Withdraw);
                         break;
                     default:
                         break;
@@ -70,7 +74,7 @@ namespace BankAccount
             }
         }
 
-        private static void Deposit()
+        private static void Operation(string successMessage, Func<int, decimal, OperationResult> operation)
         {
             Console.WriteLine("Numéro de compte ?");
             if (int.TryParse(Console.ReadLine(), out int accountId))
@@ -78,11 +82,11 @@ namespace BankAccount
                 Console.WriteLine("Montant ?");
                 if (decimal.TryParse(Console.ReadLine(), out decimal amount))
                 {
-                    var result = Bank.Deposit(accountId, amount);
+                    var result = operation(accountId, amount);
                     switch (result)
                     {
                         case OperationResult.Success:
-                            Console.WriteLine("Argent déposé !");
+                            Console.WriteLine(successMessage);
                             break;
                         case OperationResult.UnknownAccount:
                             Console.WriteLine("Compte inconnu !");
