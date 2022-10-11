@@ -159,7 +159,7 @@ namespace BankAccount
                             history.FirstName,
                             history.Name));
                         var lines = history.Operations.Select(
-                            o => string.Format("{0:G} : {1}{2}", o.Date, o.Amount > 0 ? "+" : "", o.Amount));
+                            o => string.Format("{0:G} : {1}{2} => Solde à {3}", o.Date, o.Amount > 0 ? "+" : "", o.Amount, o.Balance));
                         foreach (var line in lines)
                         {
                             Console.WriteLine(line);

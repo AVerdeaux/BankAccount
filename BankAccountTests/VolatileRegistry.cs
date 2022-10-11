@@ -46,9 +46,12 @@ namespace BankAccount.Tests
             }
             else
             {
-                return new AccountHistory(
-                    account,
-                    new List<Operation>(mOperations.Where(o => o.Item1 == id).Select(o => o.Item2)));
+                var history = new List<OperationHistory>();
+                foreach (var operation in mOperations.Where(o => o.Item1 == id).Select(o => o.Item2))
+                {
+                    history.Add(new OperationHistory(history.Any() ? history.Last().Balance : 0m, operation));
+                }
+                return new AccountHistory(account, new List<OperationHistory>(history));
             }
         }
 

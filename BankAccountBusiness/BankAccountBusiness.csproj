@@ -46,6 +46,7 @@
     <Compile Include="Bank.cs" />
     <Compile Include="IBank.cs" />
     <Compile Include="IRegistry.cs" />
+    <Compile Include="OperationHistory.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

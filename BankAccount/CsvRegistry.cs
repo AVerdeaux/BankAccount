@@ -68,7 +68,12 @@ namespace BankAccount
                     .Where(details => details.Length == 5)
                     .Where(details => int.Parse(details[ColumnIndex.Id]) == id)
                     .Select(details => new Operation(ToDate(details[ColumnIndex.Date]), decimal.Parse(details[ColumnIndex.Amount])));
-                return new AccountHistory(account, new List<Operation>(operations));
+                var history = new List<OperationHistory>();
+                foreach (var operation in operations)
+                {
+                    history.Add(new OperationHistory(history.Any() ? history.Last().Balance : 0m, operation));
+                }
+                return new AccountHistory(account, new List<OperationHistory>(history));
             }
         }
         private static DateTime ToDate(string storedDate)

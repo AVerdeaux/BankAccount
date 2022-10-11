@@ -74,6 +74,15 @@ namespace BankAccount.Tests
                 Assert.AreEqual(a1, bank.GetAccountHistory(a1)?.ID, "Can't get the first account history");
                 Assert.AreEqual(a2, bank.GetAccountHistory(a2)?.ID, "Can't get an account history");
                 Assert.AreEqual(a3, bank.GetAccountHistory(a3)?.ID, "Can't get the last account history");
+
+                bank.Deposit(a1, 50);
+                Assert.AreEqual(50, bank.GetAccountHistory(a1)?.Operations.Last().Balance, "Account history balance is wrong after a deposit");
+                bank.Deposit(a1, 100);
+                Assert.AreEqual(150, bank.GetAccountHistory(a1)?.Operations.Last().Balance, "Account history balance is wrong after a second deposit");
+                bank.Withdraw(a1, 100);
+                Assert.AreEqual(50, bank.GetAccountHistory(a1)?.Operations.Last().Balance, "Account history balance is wrong after a withdrawal");
+                bank.Withdraw(a1, 100);
+                Assert.AreEqual(-50, bank.GetAccountHistory(a1)?.Operations.Last().Balance, "Account history balance is wrong after a withdrawal making negative balance");
             }
             finally
             {
