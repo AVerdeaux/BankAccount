@@ -1,6 +1,7 @@
 ﻿using BankAccount.Business;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BankAccount
@@ -21,7 +22,7 @@ namespace BankAccount
 
         public int NextId()
         {
-            var ids = System.IO.File.ReadAllLines(mCsvFilePath)
+            var ids = GetLines()
                 .Select(line => int.Parse(line.Split(mSeparator)[ColumnIndex.Id]));
             int lastAccountId = ids.Any() ? ids.Max() : 0;
             return lastAccountId + 1;
@@ -29,14 +30,14 @@ namespace BankAccount
 
         public void StoreNewAccount(Account account)
         {
-            System.IO.File.AppendAllLines(
+            File.AppendAllLines(
                 mCsvFilePath,
                 new[] { string.Join(mSeparator.ToString(), account.ID.ToString(), account.FirstName, account.Name) });
         }
 
         public Account GetAccount(int id)
         {
-            return System.IO.File.ReadAllLines(mCsvFilePath)
+            return GetLines()
                 .Select(line => line.Split(mSeparator))
                 .Where(details => details.Length == 3)
                 .Select(details => new Account(int.Parse(details[ColumnIndex.Id]), details[ColumnIndex.FirstName], details[ColumnIndex.Name]))
@@ -45,7 +46,7 @@ namespace BankAccount
 
         public Account GetAccount(string firstName, string name)
         {
-            return System.IO.File.ReadAllLines(mCsvFilePath)
+            return GetLines()
                 .Select(line => line.Split(mSeparator))
                 .Where(details => details.Length == 3)
                 .Where(details => details[ColumnIndex.FirstName] == firstName && details[ColumnIndex.Name] == name)
@@ -62,7 +63,7 @@ namespace BankAccount
             }
             else
             {
-                var operations = System.IO.File.ReadAllLines(mCsvFilePath)
+                var operations = GetLines()
                     .Select(line => line.Split(mSeparator))
                     .Where(details => details.Length == 5)
                     .Where(details => int.Parse(details[ColumnIndex.Id]) == id)
@@ -89,7 +90,7 @@ namespace BankAccount
                 string.Empty,
                 operation.Date.ToString("yyyy-MM-dd hh:mm:ss"),
                 operation.Amount.ToString() };
-            System.IO.File.AppendAllLines(
+            File.AppendAllLines(
                 mCsvFilePath,
                 new[] { string.Join(mSeparator.ToString(), values) });
         }
@@ -99,6 +100,18 @@ namespace BankAccount
             mCsvFilePath = csvFilePath;
         }
 
+
+        private IEnumerable<string> GetLines()
+        {
+            if (File.Exists(mCsvFilePath))
+            {
+                return File.ReadAllLines(mCsvFilePath);
+            }
+            else
+            {
+                return new string[] { };
+            }
+        }
 
         public void Delete()
         {
