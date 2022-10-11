@@ -16,6 +16,7 @@ namespace BankAccount
 
             while (MainMenu() != MainMenuOption.Quit)
             {
+                Console.WriteLine();
             }
         }
 
