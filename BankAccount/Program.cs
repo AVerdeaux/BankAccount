@@ -1,6 +1,7 @@
 ﻿using BankAccount.Business;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace BankAccount
 {
@@ -27,6 +28,7 @@ namespace BankAccount
             Console.WriteLine("2 : Déposer de l'argent");
             Console.WriteLine("3 : Retirer de l'argent");
             Console.WriteLine("4 : Situation d'un compte");
+            Console.WriteLine("5 : Historique d'un compte");
             Console.WriteLine("0 : Quitter");
 
             if (int.TryParse(Console.ReadLine(), out int choice))
@@ -46,6 +48,9 @@ namespace BankAccount
                         break;
                     case MainMenuOption.Statement:
                         DisplayStatement();
+                        break;
+                    case MainMenuOption.History:
+                        DisplayHistory();
                         break;
                     default:
                         break;
@@ -129,6 +134,48 @@ namespace BankAccount
                 else
                 {
                     Console.WriteLine("Situation non récupérée. Numéro de compte invalide ?");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Numéro de compte invalide !");
+            }
+        }
+
+        private static void DisplayHistory()
+        {
+            Console.WriteLine("Numéro de compte ?");
+            if (int.TryParse(Console.ReadLine(), out int accountId))
+            {
+                var history = Bank.GetAccountHistory(accountId);
+                if (history != null)
+                {
+
+                    if (history.Operations.Any())
+                    {
+                        Console.WriteLine(
+                            string.Format("Depuis le {0:G}, le compte de {1} {2} a l'historique suivant :",
+                            history.Operations.Last().Date,
+                            history.FirstName,
+                            history.Name));
+                        var lines = history.Operations.Select(
+                            o => string.Format("{0:G} : {1}{2}", o.Date, o.Amount > 0 ? "+" : "", o.Amount));
+                        foreach (var line in lines)
+                        {
+                            Console.WriteLine(line);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(
+                            string.Format("Le compte de {0} {1} n'a encore aucun historique.",
+                            history.FirstName,
+                            history.Name));
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Historique non récupéré. Numéro de compte invalide ?");
                 }
             }
             else
