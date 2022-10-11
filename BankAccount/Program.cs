@@ -26,6 +26,7 @@ namespace BankAccount
             Console.WriteLine("1 : Créer un compte");
             Console.WriteLine("2 : Déposer de l'argent");
             Console.WriteLine("3 : Retirer de l'argent");
+            Console.WriteLine("4 : Situation d'un compte");
             Console.WriteLine("0 : Quitter");
 
             if (int.TryParse(Console.ReadLine(), out int choice))
@@ -42,6 +43,9 @@ namespace BankAccount
                         break;
                     case MainMenuOption.Withdraw:
                         Operation("Retrait effectué !", Bank.Withdraw);
+                        break;
+                    case MainMenuOption.Statement:
+                        DisplayStatement();
                         break;
                     default:
                         break;
@@ -99,6 +103,32 @@ namespace BankAccount
                 else
                 {
                     Console.WriteLine("Montant invalide !");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Numéro de compte invalide !");
+            }
+        }
+
+        private static void DisplayStatement()
+        {
+            Console.WriteLine("Numéro de compte ?");
+            if (int.TryParse(Console.ReadLine(), out int accountId))
+            {
+                var statement = Bank.GetStatement(accountId);
+                if (statement != null)
+                {
+                    Console.WriteLine(
+                        string.Format("à la date du {0:G}, le compte de {1} {2} est à {3}.",
+                        statement.Date,
+                        statement.FirstName,
+                        statement.Name,
+                        statement.Balance));
+                }
+                else
+                {
+                    Console.WriteLine("Situation non récupérée. Numéro de compte invalide ?");
                 }
             }
             else
